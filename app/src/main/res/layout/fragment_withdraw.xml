@@ -17,6 +17,7 @@
             android:layout_marginEnd="99dp" android:layout_marginRight="99dp"/>
     <Button
             android:text="Withdraw"
+            android:onClick="withdraw"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/withdraw_button" android:layout_marginTop="56dp"
