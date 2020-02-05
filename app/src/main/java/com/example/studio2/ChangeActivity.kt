@@ -23,30 +23,34 @@ class ChangeActivity : AppCompatActivity() {
     }
 
     fun switchFragment(view: View?){
+        //this is how we get the information from the main activity
+        var bundle :Bundle ?=intent.extras
+        var total = bundle!!.getInt("total")
+
         if(depFrag){
             val withdraw = WithdrawFragment()
-            withdraw.arguments = Bundle()
+            //Sending information over to our fragment
+            var bundle = Bundle()
+            bundle.putInt("total", total)
+            withdraw.arguments = bundle
+
+            //Replacing the view in our change activity with our withdraw fragment
             val transaction = supportFragmentManager.beginTransaction()
             transaction.replace(R.id.container, withdraw)
             transaction.commit()
             depFrag = false
         } else{
             val deposit = DepositFragment()
+            //Sending the info to our fragment
+            var bundle = Bundle()
+            bundle.putInt("total", total)
+            deposit.arguments = bundle
 
-            deposit.arguments = Bundle()
-
+            //Changing our view to the deposit fragment.
             val transaction = supportFragmentManager.beginTransaction()
             transaction.replace(R.id.container, deposit)
             transaction.commit()
             depFrag = true
         }
-    }
-
-    fun deposit(){
-
-    }
-
-    fun withdraw(){
-
     }
 }

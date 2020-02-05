@@ -12,6 +12,18 @@ import kotlinx.android.synthetic.main.fragment_deposit.*
 
 class DepositFragment : Fragment() {
 
+    var total = 0
+    lateinit var depositButton : Button
+    lateinit var depositValue : TextView
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val intent = activity!!.intent
+        total = intent!!.getIntExtra("total", 0)
+
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -21,5 +33,22 @@ class DepositFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_deposit, container, false)
     }
 
+    override fun onStart(){
+        super.onStart()
 
+        depositButton = deposit_button
+        depositValue = deposit_value
+
+        depositButton.setOnClickListener {
+            var value : Int? = depositValue.text.toString().toInt()
+            if(value != null){
+                total += value
+            }
+
+            //set value for intent to add to total
+            val intent = Intent (activity, MainActivity::class.java)
+            intent.putExtra("total", total)
+            activity!!.startActivity(intent)
+        }
+    }
 }

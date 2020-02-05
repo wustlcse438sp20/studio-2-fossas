@@ -13,6 +13,15 @@ import kotlinx.android.synthetic.main.fragment_withdraw.*
 
 class WithdrawFragment : Fragment() {
 
+    var total = 0
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val intent = activity!!.intent
+        total = intent!!.getIntExtra("total", 0)
+
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -22,5 +31,22 @@ class WithdrawFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_withdraw, container, false)
     }
 
+    override fun onStart() {
+        super.onStart()
 
+        val withdrawButton = withdraw_button
+        val withdrawValue = withdraw_value
+        withdrawButton.setOnClickListener {
+            //set value
+            var value : Int? = withdrawValue.text.toString().toInt()
+            if(value != null){
+                total -= value
+            }
+
+            //set intent
+            val intent = Intent (activity, MainActivity::class.java)
+            intent.putExtra("total", total)
+            activity!!.startActivity(intent)
+        }
+    }
 }

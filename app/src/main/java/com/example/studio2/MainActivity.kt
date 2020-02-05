@@ -12,26 +12,24 @@ import android.view.View
 class MainActivity : AppCompatActivity() {
 
 
-    private val CURRENT_BALANCE = 0
+    private var CURRENT_BALANCE = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val intent = intent
+        CURRENT_BALANCE = intent!!.getIntExtra("total", 0)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        value_display.text = "$" + CURRENT_BALANCE.toString()
     }
 
     fun goToChange(view: View){
         val intentToChange = Intent(this, ChangeActivity::class.java)
-        startActivityForResult(intentToChange, CURRENT_BALANCE)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode== CURRENT_BALANCE){
-            if(resultCode== Activity.RESULT_OK){
-                //Do something here
-
-            }
-        }
+        intentToChange.putExtra("total", CURRENT_BALANCE)
+        startActivity(intentToChange)
     }
 }
